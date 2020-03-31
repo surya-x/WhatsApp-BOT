@@ -13,53 +13,28 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
-
 from selenium.common.exceptions import TimeoutException
 
-from utils.check_name import check_unread_msgs
-from utils.send_img import send_img
-from utils.send_ss import send_ss
-from utils.seach import search_bar
-from utils.screenshot import take_screenshot
-from utils.send_message import send_msg
-
-from config import contacts_filePath
-from config import parameters_filePath
-from config import imagepath
-from config import sspath
+from utils import check_unread_msgs, send_img, send_ss, search_bar, take_screenshot, send_msg
+from utils import establishing_conn_withExcel
+from config import contacts_filePath, parameters_filePath, imagepath, sspath
 
 import xlrd
 from time import sleep
 from random import randint
 
-def establishing_conn_withExcel(contacts_filePath, parameters_filePath):
-    wb1 = xlrd.open_workbook(contacts_filePath)
-    wb2 = xlrd.open_workbook(parameters_filePath)
-
-    sheet1 = wb1.sheet_by_index(0)
-    sheet2 = wb2.sheet_by_index(0)
-
-    for i in range(1, sheet1.nrows):
-        namelist.append(sheet1.cell_value(i, 1))
-        msglist.append(sheet1.cell_value(i, 3))
-        numlist.append(sheet1.cell_value(i, 2))
-
-    for i in range(1, sheet2.nrows):
-        forwardlist.append(sheet2.cell_value(i, 0))
 
 options = Options()
 
 options.add_argument(r"user-data-dir=C:\Users\chief_surya01\AppData\Local\Google\Chrome\User Data")
 driver = webdriver.Chrome(options=options)
 
-driver.get("https://web.whatsapp.com")
-
 print("Please scan the QR code to login into Whatsapp")
 driver.get("https://web.whatsapp.com")
 
 try:                                                            # To wait until the page loads
     element = WebDriverWait(driver, 600).until(
-    EC.presence_of_element_located((By.XPATH, ''' //*[@id="pane-side"]/div[1]/div/div/div '''))
+        EC.presence_of_element_located((By.XPATH, ''' //*[@id="pane-side"]/div[1]/div/div/div '''))
     )
 except TimeoutException as Exception:
      print("Failed logging Whatsapp \nStart again...")
@@ -68,23 +43,26 @@ else:
     print("QR code scanned, You are logged into Whatsapp")
 
 
-namelist    = []
-msglist     = []
-numlist     = []
-forwardlist = []
+excel_data = {}
+excel_data['namelist']    = []
+excel_data['msglist']     = []
+excel_data['numlist']     = []
+excel_data['forwardlist'] = []
+
+
 
 # for establishing connection with excel
 
 print("===================Excel contents================================== ")
 
-establishing_conn_withExcel(contacts_filePath, parameters_filePath)
-print(namelist, msglist, numlist, forwardlist)
+excel_data = establishing_conn_withExcel(contacts_filePath, parameters_filePath)
+# print(excel_data['namelist'], excel_data['msglist'], excel_data['numlist'], excel_data['forwardlist'])
 
 print("=====================Excel contents printed======================== ")
 
 # To iterate each name in contacts.xlsx and execute code
 
-for name, msg, num in zip(namelist, msglist, numlist):
+for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_data['numlist']):
     print("For contact :", name)
     unread_msgs_count = check_unread_msgs(driver, name)  # change method name to check_unread_msgs()
 
@@ -101,7 +79,7 @@ for name, msg, num in zip(namelist, msglist, numlist):
     send_img(driver, imagepath)
 
     if unread_msgs_count > 0:
-        send_ss(driver, sspath, forwardlist)
+        send_ss(driver, sspath, excel_data['forwardlist'])
 
     print("Sending message to %s success"%name)
     sleep(randint(4,7))
