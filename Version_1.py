@@ -15,8 +15,6 @@ from time import sleep
 from random import randint
 
 
-
-
 excel_data = {}
 excel_data['namelist']    = []
 excel_data['msglist']     = []
@@ -35,7 +33,6 @@ print(excel_data['namelist'], excel_data['msglist'], excel_data['numlist'], exce
 print("=====================Excel contents printed======================== ")
 
 # To iterate each name in contacts.xlsx and execute code
-
 for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_data['numlist']):
     print("For contact :", name)
     unread_msgs_count = check_unread_msgs(driver, name)  # change method name to check_unread_msgs()
