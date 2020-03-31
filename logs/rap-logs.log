@@ -1,0 +1,60 @@
+2020-04-01 00:33:13,447 INFO  [utils.py:15] Connecting with whatsapp
+2020-04-01 00:33:31,139 INFO  [utils.py:34] QR code scanned, You are logged into Whatsapp
+2020-04-01 00:33:31,139 INFO  [utils.py:40] EStablishing connection with excel
+2020-04-01 00:33:31,162 INFO  [Version_1.py:32] ======For contact :Surya W | msg: hello surya
+2020-04-01 00:33:31,162 INFO  [utils.py:119] check unread msgs called: 
+2020-04-01 00:33:33,83 INFO  [utils.py:138] unread_msgs_count: 1
+2020-04-01 00:33:37,828 INFO  [utils.py:144] taking screenshot is called: 
+2020-04-01 00:33:38,93 INFO  [utils.py:146] Screenshot taken
+2020-04-01 00:33:38,93 INFO  [utils.py:78] sending message: hello surya
+2020-04-01 00:33:42,311 INFO  [utils.py:88] Sending image to open chats: 
+2020-04-01 00:33:52,21 INFO  [utils.py:67] Sending screenshot to contacts: 
+2020-04-01 00:34:00,368 INFO  [utils.py:88] Sending image to open chats: 
+2020-04-01 00:34:13,695 INFO  [utils.py:88] Sending image to open chats: 
+2020-04-01 00:34:22,538 INFO  [Version_1.py:48] =======Sending message to Surya W success
+2020-04-01 00:34:27,539 INFO  [Version_1.py:32] ======For contact :Mummy I | msg: Heelooo Mummi
+2020-04-01 00:34:27,540 INFO  [utils.py:119] check unread msgs called: 
+2020-04-01 00:34:28,260 INFO  [utils.py:138] unread_msgs_count: 0
+2020-04-01 00:34:30,599 INFO  [utils.py:78] sending message: Heelooo Mummi
+2020-04-01 00:34:34,810 INFO  [utils.py:88] Sending image to open chats: 
+2020-04-01 00:34:40,637 INFO  [Version_1.py:48] =======Sending message to Mummy I success
+2020-04-01 00:37:43,540 INFO  [utils.py:15] Connecting with whatsapp
+2020-04-01 00:38:03,358 INFO  [utils.py:35] QR code scanned, You are logged into Whatsapp
+2020-04-01 00:38:03,358 INFO  [utils.py:41] EStablishing connection with excel
+2020-04-01 00:38:32,668 INFO  [utils.py:15] Connecting with whatsapp
+2020-04-01 00:38:43,843 INFO  [utils.py:35] QR code scanned, You are logged into Whatsapp
+2020-04-01 00:38:43,843 INFO  [utils.py:41] EStablishing connection with excel
+2020-04-01 00:38:43,864 INFO  [Version_2.py:31] ======For contact :Surya W | msg: hello surya
+2020-04-01 00:38:47,68 INFO  [utils.py:79] sending message: hello surya
+2020-04-01 00:38:52,270 INFO  [utils.py:89] Sending image to open chats: 
+2020-04-01 00:39:00,179 INFO  [Version_2.py:37] =======Sending message to Surya W success
+2020-04-01 00:39:04,183 INFO  [Version_2.py:31] ======For contact :Mummy I | msg: Heelooo Mummi
+2020-04-01 00:39:06,659 INFO  [utils.py:79] sending message: Heelooo Mummi
+2020-04-01 00:39:09,868 INFO  [utils.py:89] Sending image to open chats: 
+2020-04-01 00:39:17,658 INFO  [Version_2.py:37] =======Sending message to Mummy I success
+2020-04-01 00:40:09,35 INFO  [utils.py:15] Connecting with whatsapp
+2020-04-01 00:40:23,684 INFO  [utils.py:35] QR code scanned, You are logged into Whatsapp
+2020-04-01 00:40:23,685 INFO  [utils.py:41] EStablishing connection with excel
+2020-04-01 00:40:23,701 INFO  [Version_3.py:33] ======For contact :Surya W | msg: hello surya
+2020-04-01 00:40:23,702 INFO  [utils.py:120] check unread msgs called: 
+2020-04-01 00:40:25,299 INFO  [utils.py:139] unread_msgs_count: 0
+2020-04-01 00:40:28,172 INFO  [utils.py:79] sending message: hello surya
+2020-04-01 00:40:33,388 INFO  [Version_3.py:47] =======Sending message to Surya W success
+2020-04-01 00:40:38,394 INFO  [Version_3.py:33] ======For contact :Mummy I | msg: Heelooo Mummi
+2020-04-01 00:40:38,394 INFO  [utils.py:120] check unread msgs called: 
+2020-04-01 00:40:39,22 INFO  [utils.py:139] unread_msgs_count: 0
+2020-04-01 00:40:43,495 INFO  [utils.py:79] sending message: Heelooo Mummi
+2020-04-01 00:40:45,672 INFO  [Version_3.py:47] =======Sending message to Mummy I success
+2020-04-01 00:41:00,273 INFO  [utils.py:15] Connecting with whatsapp
+2020-04-01 00:41:13,479 INFO  [utils.py:35] QR code scanned, You are logged into Whatsapp
+2020-04-01 00:41:13,479 INFO  [utils.py:41] EStablishing connection with excel
+2020-04-01 00:41:13,490 INFO  [Version_4.py:27] ======For contact :Surya W | msg: hello surya
+2020-04-01 00:41:19,97 INFO  [utils.py:79] sending message: hello surya
+2020-04-01 00:41:24,277 INFO  [Version_4.py:33] =======Sending message to Surya W success
+2020-04-01 00:41:31,284 INFO  [Version_4.py:27] ======For contact :Mummy I | msg: Heelooo Mummi
+2020-04-01 00:41:33,783 INFO  [utils.py:79] sending message: Heelooo Mummi
+2020-04-01 00:41:39,28 INFO  [Version_4.py:33] =======Sending message to Mummy I success
+2020-04-01 00:50:24,50 INFO  [utils.py:15] Connecting with whatsapp
+Connecting with whatsapp
+2020-04-01 00:55:10,316 INFO  [utils.py:15] Connecting with whatsapp
+2020-04-01 00:55:49,222 INFO  [utils.py:15] Connecting with whatsapp

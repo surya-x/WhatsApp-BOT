@@ -9,7 +9,7 @@ The Version 3 will do the following tasks:
 
 from app.utils import check_unread_msgs, send_ss, search_bar, take_screenshot, send_msg
 from app.utils import establishing_conn_withExcel, connecting_with_whatsapp
-from config import contacts_filePath, parameters_filePath, sspath
+from config import contacts_filePath, parameters_filePath, sspath, logging
 from time import sleep
 from random import randint
 
@@ -23,34 +23,30 @@ excel_data['forwardlist'] = []
 
 driver = connecting_with_whatsapp()
 
-# for establishing connection with excel
-print("===================Excel contents================================== ")
+try:
 
-excel_data = establishing_conn_withExcel(contacts_filePath, parameters_filePath)
-print(excel_data['namelist'], excel_data['msglist'], excel_data['numlist'], excel_data['forwardlist'])
+    # for establishing connection with excel
+    excel_data = establishing_conn_withExcel(contacts_filePath, parameters_filePath)
 
-print("=====================Excel contents printed======================== ")
+    # To iterate each name in contacts.xlsx and execute code
+    for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_data['numlist']):
+        logging.info("======For contact :" + name +  " | msg: " + msg)
+        unread_msgs_count = check_unread_msgs(driver, name)  # change method name to check_unread_msgs()
+        unread_msgs_count = int(unread_msgs_count)
 
-# To iterate each name in contacts.xlsx and execute code
+        search_bar(driver, name)                             # name should be saved in phone contacts
 
-for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_data['numlist']):
-    print("For contact :", name)
-    unread_msgs_count = check_unread_msgs(driver, name)  # change method name to check_unread_msgs()
+        if unread_msgs_count > 0:
+            take_screenshot(driver)
 
-    print("Unread_msgs: ", unread_msgs_count)
-    unread_msgs_count = int(unread_msgs_count)
+        send_msg(driver, msg)
 
-    search_bar(driver, name)                             # name should be saved in phone contacts
+        if unread_msgs_count > 0:
+            send_ss(driver, sspath, excel_data['forwardlist'])
 
-    if unread_msgs_count > 0:
-        take_screenshot(driver)
+        logging.info("=======Sending message to %s success"%name)
+        sleep(randint(4,7))
 
-    send_msg(driver, msg)
-
-    if unread_msgs_count > 0:
-        send_ss(driver, sspath, excel_data['forwardlist'])
-
-    print("Sending message to %s success"%name)
-    sleep(randint(4,7))
-
-driver.quit()
+finally:
+    print("Task Completed!")
+    driver.quit()

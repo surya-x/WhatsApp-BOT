@@ -7,39 +7,36 @@ The Version 2 will do the following tasks:
 
 from app.utils import send_img, search_bar, send_msg
 from app.utils import establishing_conn_withExcel, connecting_with_whatsapp
-from config import contacts_filePath, parameters_filePath, imagepath
+from config import contacts_filePath, parameters_filePath, imagepath, logging
 from time import sleep
 from random import randint
 
 excel_data = {}
-excel_data['namelist']    = []
-excel_data['msglist']     = []
-excel_data['numlist']     = []
+excel_data['namelist'] = []
+excel_data['msglist'] = []
+excel_data['numlist'] = []
 excel_data['forwardlist'] = []
 
 
 driver = connecting_with_whatsapp()
-# for establishing connection with excel
 
-print("===================Excel contents================================== ")
+try:
 
-excel_data = establishing_conn_withExcel(contacts_filePath, parameters_filePath)
-print(excel_data['namelist'], excel_data['msglist'], excel_data['numlist'], excel_data['forwardlist'])
+	# for establishing connection with excel
+	excel_data = establishing_conn_withExcel(
+	    contacts_filePath, parameters_filePath)
 
-print("=====================Excel contents printed======================== ")
+	# To iterate each name in contacts.xlsx and execute code
+	for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_data['numlist']):
+		logging.info("======For contact :" + name + " | msg: " + msg)
 
-# To iterate each name in contacts.xlsx and execute code
+		search_bar(driver, name)                             # name should be saved in phone contacts
+		send_msg(driver, msg)
+		send_img(driver, imagepath)
 
-for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_data['numlist']):
-    print("For contact :", name)
+		logging.info("=======Sending message to %s success"%name)
+		sleep(randint(4,7))
 
-    search_bar(driver, name)                             # name should be saved in phone contacts
-
-    send_msg(driver, msg)
-
-    send_img(driver, imagepath)
-
-    print("Sending message to %s success"%name)
-    sleep(randint(4,7))
-
-driver.quit()
+finally:
+	print("Task Completed!")
+	driver.quit()

@@ -8,32 +8,37 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from random import randint
 import xlrd
+import logging
 
 
 def connecting_with_whatsapp():
-	options = Options()
+    logging.info("Connecting with whatsapp")
+    options = Options()
 
-	options.add_argument(r"user-data-dir=C:\Users\chief_surya01\AppData\Local\Google\Chrome\User Data")
-	driver = webdriver.Chrome(options=options)
+    # options.add_argument(
+    #     r"user-data-dir=C:\Users\chief_surya01\AppData\Local\Google\Chrome\User Data")
+    
+    driver = webdriver.Chrome(options=options)
 
-	print("Please scan the QR code to login into Whatsapp")
-	driver.get("https://web.whatsapp.com")
+    print("Please scan the QR code if prompted to login into Whatsapp")
+    driver.get("https://web.whatsapp.com")
 
-	try:                                                            # To wait until the page loads
-	    element = WebDriverWait(driver, 600).until(
-	        EC.presence_of_element_located((By.XPATH, ''' //*[@id="pane-side"]/div[1]/div/div/div '''))
-	    )
-	except TimeoutException as Exception:
-	     print("Failed logging Whatsapp \nStart again...")
-	     driver.quit()
-	else:
-	    print("QR code scanned, You are logged into Whatsapp")
+    try:                                                            # To wait until the page loads
+        element = WebDriverWait(driver, 600).until(
+            EC.presence_of_element_located(
+                (By.XPATH, ''' //*[@id="pane-side"]/div[1]/div/div/div '''))
+        )
+    except TimeoutException as Exception:
+        logging.info("Failed logging Whatsapp \nStart again...")
+        driver.quit()
+    else:
+        logging.info("QR code scanned, You are logged into Whatsapp")
 
-	return driver
-
+    return driver
 
 
 def establishing_conn_withExcel(contacts_filePath, parameters_filePath):
+    logging.info("EStablishing connection with excel")
     data = {}
     data['namelist'] = []
     data['msglist'] = []
@@ -57,69 +62,86 @@ def establishing_conn_withExcel(contacts_filePath, parameters_filePath):
     return data
 
 
-
-# This method is used to send the screenshot present in sspath to the contacts passed in the function parameter
+# This method is used to send the screenshot present in sspath to the
+# contacts passed in the function parameter
 def send_ss(driver, sspath, tosend):
+    logging.info("Sending screenshot to contacts: ")
     for each in tosend:
-        sleep(randint(2,5))                        # sleep is used to delay the scripts for 2-4 seconds
+        # sleep is used to delay the scripts for 2-4 seconds
+        sleep(randint(2, 5))
         search_bar(driver, each)
         send_img(driver, sspath)
 
 
-# This method is used to type and send the msg the chat which is already opened.
+# This method is used to type and send the msg the chat which is already
+# opened.
 def send_msg(driver, msg):
-    print("sending message: ", msg)
-    sleep(randint(2,5))                        # sleep is used to delay the scripts for 2-4 seconds
-    typ = driver.find_element_by_xpath('''//*[@id="main"]/footer/div[1]/div[2]''')
+    logging.info("sending message: " + msg)
+    # sleep is used to delay the scripts for 2-4 seconds
+    sleep(randint(2, 5))
+    typ = driver.find_element_by_xpath(
+        '''//*[@id="main"]/footer/div[1]/div[2]''')
     typ.send_keys(msg, Keys.RETURN)
 
 
 # This method is used to send the image to a chat which is already opened.
 def send_img(driver, imgpath):
-    sleep(randint(1, 4))                        # sleep is used to delay the scripts for 1-3 seconds
+    logging.info("Sending image to open chats: ")
+    # sleep is used to delay the scripts for 1-3 seconds
+    sleep(randint(1, 4))
     driver.find_element_by_css_selector("span[data-icon = 'clip']").click()
 
-    sleep(randint(1, 4))                        # sleep is used to delay the scripts for 1-3 seconds
-    driver.find_element_by_css_selector("input[type='file']").send_keys(imgpath)
+    # sleep is used to delay the scripts for 1-3 seconds
+    sleep(randint(1, 4))
+    driver.find_element_by_css_selector(
+        "input[type='file']").send_keys(imgpath)
 
     send = WebDriverWait(driver, 120).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "span[data-icon='send-light']"))
+        EC.presence_of_element_located(
+            (By.CSS_SELECTOR, "span[data-icon='send-light']"))
     )
-    sleep(randint(1, 3))                        # sleep is used to delay the scripts for 1-2 seconds
+    # sleep is used to delay the scripts for 1-2 seconds
+    sleep(randint(1, 3))
     send.click()
 
 
-
-# This method is used to type the parameter given to function into search bar of Whatsapp and will open the chat
+# This method is used to type the parameter given to function into search
+# bar of Whatsapp and will open the chat
 def search_bar(driver, parameter):
-    print("Search bar called: ")
-    search = driver.find_element_by_xpath('''//*[@id="side"]/div[1]/div/label/div/div[2]''')
+    search = driver.find_element_by_xpath(
+        '''//*[@id="side"]/div[1]/div/label/div/div[2]''')
     search.send_keys(parameter, Keys.RETURN)
-    sleep(randint(2,5))                             # sleep is used to delay the scripts for 2-4 seconds
+    # sleep is used to delay the scripts for 2-4 seconds
+    sleep(randint(2, 5))
 
 
 # This method is used to check for unread messages if there are any
 def check_unread_msgs(driver, name):
-    print("check unread msgs called: ")
-    allcontacts = driver.find_elements_by_xpath(''' //*[@id="pane-side"]/div[1]/div/div/div ''')
+    logging.info("check unread msgs called: ")
+    allcontacts = driver.find_elements_by_xpath(
+        ''' //*[@id="pane-side"]/div[1]/div/div/div ''')
 
-    unread_msgs_count = -1                          # return -1 if the name is not there
+    # return -1 if the name is not there
+    unread_msgs_count = -1
     for contact in allcontacts:
         stringlist = contact.text.split("\n")
         name1 = stringlist[0]
         if name1.lower() == name.lower():
             if len(stringlist) > 3:
-                unread_msgs_count = stringlist[3]   # return no of unread msg if its there
+                # return no of unread msg if its there
+                unread_msgs_count = stringlist[3]
             else:
                 unread_msgs_count = 0               # return 0 if there's no unread msg there
 
     if unread_msgs_count == ":":                    # NOTE: Mute chats are treated as 0 unread messages
         unread_msgs_count = 0
 
+    logging.info("unread_msgs_count: " + str(unread_msgs_count))
     return unread_msgs_count
 
 
 # This method is used to take the screenshot of the chat.
-def take_screenshot(driver):
-    driver.save_screenshot("screenshots/ss.png")
-    print("Screenshot taken")
+def take_screenshot(driver, sspath):
+    logging.info("taking screenshot is called: ")
+    driver.save_screenshot(sspath)
+    logging.info("Screenshot taken")
