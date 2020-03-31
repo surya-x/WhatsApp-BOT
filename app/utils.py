@@ -100,6 +100,7 @@ def send_msg(driver, msg, name):
         typ.send_keys(msg, Keys.RETURN)
     except NoSuchElementException as Exception:
         logging.error("NoSuchElementException found in send_msg")
+        logging.error(e)
         print("Name not found for sending msg: " + name)
     except Exception as e:
         logging.error("Exception found in send_msg")
@@ -130,6 +131,7 @@ def send_img(driver, imgpath):
         send.click()
     except NoSuchElementException as Exception:
         logging.error("NoSuchElementException found in send_img")
+        logging.error(e)
     except Exception as e:
         logging.error("Exception found in send_img")
         logging.error(e)
@@ -149,7 +151,7 @@ def search_bar(driver, parameter):
 
     except NoSuchElementException as Exception:
         logging.error("NoSuchElementException found in search_bar")
-
+        logging.error(e)
     except Exception as e:
         logging.error("Exception found in search_bar")
         logging.error(e)
