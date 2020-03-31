@@ -8,8 +8,8 @@ The Version 1 will do the following tasks:
 > It will send the screenshot to all contacts listed in "parameter.xlsx" under column A
 '''
 
-from utils import check_unread_msgs, send_img, send_ss, search_bar, take_screenshot, send_msg
-from utils import establishing_conn_withExcel, connecting_with_whatsapp
+from app.utils import check_unread_msgs, send_img, send_ss, search_bar, take_screenshot, send_msg
+from app.utils import establishing_conn_withExcel, connecting_with_whatsapp
 from config import contacts_filePath, parameters_filePath, imagepath, sspath
 from time import sleep
 from random import randint

@@ -5,79 +5,32 @@ The Version 2 will do the following tasks:
 > It will then send the gift.png to the contact
 '''
 
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-
-from selenium.common.exceptions import TimeoutException
-
-from utils.send_img import send_img
-from utils.seach import search_bar
-from utils.send_message import send_msg
-
-from config import contacts_filePath
-from config import parameters_filePath
-from config import imagepath
-
-import xlrd
+from app.utils import send_img, search_bar, send_msg
+from app.utils import establishing_conn_withExcel, connecting_with_whatsapp
+from config import contacts_filePath, parameters_filePath, imagepath
 from time import sleep
 from random import randint
 
-def establishing_conn_withExcel(contacts_filePath, parameters_filePath):
-    wb1 = xlrd.open_workbook(contacts_filePath)
-    wb2 = xlrd.open_workbook(parameters_filePath)
-
-    sheet1 = wb1.sheet_by_index(0)
-    sheet2 = wb2.sheet_by_index(0)
-
-    for i in range(1, sheet1.nrows):
-        namelist.append(sheet1.cell_value(i, 1))
-        msglist.append(sheet1.cell_value(i, 3))
-        numlist.append(sheet1.cell_value(i, 2))
-
-    for i in range(1, sheet2.nrows):
-        forwardlist.append(sheet2.cell_value(i, 0))
-
-options = Options()
-
-options.add_argument(r"user-data-dir=C:\Users\chief_surya01\AppData\Local\Google\Chrome\User Data")
-driver = webdriver.Chrome(options=options)
-
-driver.get("https://web.whatsapp.com")
-
-print("Please scan the QR code to login into Whatsapp")
-driver.get("https://web.whatsapp.com")
-
-try:                                                            # To wait until the page loads
-    element = WebDriverWait(driver, 600).until(
-    EC.presence_of_element_located((By.XPATH, ''' //*[@id="pane-side"]/div[1]/div/div/div '''))
-    )
-except TimeoutException as Exception:
-     print("Failed logging Whatsapp \nStart again...")
-     driver.quit()
-else:
-    print("QR code scanned, You are logged into Whatsapp")
+excel_data = {}
+excel_data['namelist']    = []
+excel_data['msglist']     = []
+excel_data['numlist']     = []
+excel_data['forwardlist'] = []
 
 
-namelist    = []
-msglist     = []
-numlist     = []
-forwardlist = []
-
+driver = connecting_with_whatsapp()
 # for establishing connection with excel
 
 print("===================Excel contents================================== ")
 
-establishing_conn_withExcel(contacts_filePath, parameters_filePath)
-print(namelist, msglist, numlist, forwardlist)
+excel_data = establishing_conn_withExcel(contacts_filePath, parameters_filePath)
+print(excel_data['namelist'], excel_data['msglist'], excel_data['numlist'], excel_data['forwardlist'])
 
 print("=====================Excel contents printed======================== ")
 
 # To iterate each name in contacts.xlsx and execute code
 
-for name, msg, num in zip(namelist, msglist, numlist):
+for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_data['numlist']):
     print("For contact :", name)
 
     search_bar(driver, name)                             # name should be saved in phone contacts

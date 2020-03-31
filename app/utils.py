@@ -10,7 +10,6 @@ from random import randint
 import xlrd
 
 
-
 def connecting_with_whatsapp():
 	options = Options()
 
