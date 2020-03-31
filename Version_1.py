@@ -13,6 +13,7 @@ from app.utils import establishing_conn_withExcel, connecting_with_whatsapp
 from config import contacts_filePath, parameters_filePath, imagepath, sspath
 from time import sleep
 from random import randint
+import logging
 
 
 excel_data = {}
@@ -25,19 +26,19 @@ excel_data['forwardlist'] = []
 driver = connecting_with_whatsapp()
 
 # for establishing connection with excel
-print("===================Excel contents================================== ")
+logging.info("===================Excel contents================================== ")
 
 excel_data = establishing_conn_withExcel(contacts_filePath, parameters_filePath)
-print(excel_data['namelist'], excel_data['msglist'], excel_data['numlist'], excel_data['forwardlist'])
+logging.info(excel_data['namelist'], excel_data['msglist'], excel_data['numlist'], excel_data['forwardlist'])
 
-print("=====================Excel contents printed======================== ")
+logging.info("=====================Excel contents logging.infoed======================== ")
 
 # To iterate each name in contacts.xlsx and execute code
 for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_data['numlist']):
-    print("For contact :", name)
+    logging.info("For contact :", name, " | msg: ", msg)
     unread_msgs_count = check_unread_msgs(driver, name)  # change method name to check_unread_msgs()
 
-    print("Unread_msgs: ", unread_msgs_count)
+    logging.info("Unread_msgs: ", unread_msgs_count)
     unread_msgs_count = int(unread_msgs_count)
 
     search_bar(driver, name)                             # name should be saved in phone contacts
@@ -52,5 +53,7 @@ for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_d
     if unread_msgs_count > 0:
         send_ss(driver, sspath, excel_data['forwardlist'])
 
-    print("Sending message to %s success"%name)
+    logging.info("Sending message to %s success"%name)
     sleep(randint(4,7))
+
+driver.quit()

@@ -14,8 +14,6 @@ from time import sleep
 from random import randint
 
 
-
-
 excel_data = {}
 excel_data['namelist']    = []
 excel_data['msglist']     = []
@@ -54,3 +52,5 @@ for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_d
 
     print("Sending message to %s success"%name)
     sleep(randint(4,7))
+
+driver.quit()

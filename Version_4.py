@@ -4,8 +4,8 @@ The Version 4 will do the following tasks:
 > It will send the respective message for a contact from "contact.xlsx" under column D
 '''
 
-from utils import  search_bar, send_msg
-from utils import establishing_conn_withExcel, connecting_with_whatsapp
+from app.utils import  search_bar, send_msg
+from app.utils import establishing_conn_withExcel, connecting_with_whatsapp
 from config import contacts_filePath, parameters_filePath
 from time import sleep
 from random import randint
@@ -36,3 +36,5 @@ for name, msg, num in zip(excel_data['namelist'], excel_data['msglist'], excel_d
 
     print("Sending message to %s success"%name)
     sleep(randint(4,7))
+
+driver.quit()
