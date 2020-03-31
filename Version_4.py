@@ -28,11 +28,14 @@ try:
 
         search_bar(driver, name)                             # name should be saved in phone contacts
 
-        send_msg(driver, msg)
+        send_msg(driver, msg, name)
 
         logging.info("=======Sending message to %s success"%name)
         sleep(randint(4,7))
 
+except Exception as e:
+    print("Error Occured!!")
+    logging.error(e)
 finally:
-    print("Task Completed!")
+    # print("Task Completed!")
     driver.quit()
