@@ -35,12 +35,12 @@ This project is build with 4 versions, which work as :-
 
 ## NOTE: 
 ### 1. For changing the files "contacts.xlsx" and "parameter.xlsx", the directory containing these files are under 
-	RPA-Project\assets\data\contact.xlsx
-	RPA-Project\assets\data\parameter.xlsx
+	WhatsApp-BOT\assets\data\contact.xlsx
+	WhatsApp-BOT\assets\data\parameter.xlsx
 
 ### 2. For changing the "gift.png", the directory containing the image is under
-	RPA-Project\assets\image\gift.png
+	WhatsApp-BOT\assets\image\gift.png
 
 ### 3. For changing the location of any of the following "contacts.xlsx", "parameter.xlsx" or "gift.xlsx"
-	you need to change the path to desired path from RPA-Project\config.py
+	you need to change the path to desired path from WhatsApp-BOT\config.py
     Important :- Write the names in contacts.xlsx same as the names saved in your phone contacts
